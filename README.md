@@ -5,7 +5,7 @@ This repository contains the reference code for our ACM MM 2019 paper. The pdf i
 
 If you use any part of our code, or SGDNet is useful for your research, please consider citing:
 ```
-@inproceedings{yang2017sgdnet,
+@inproceedings{yang2019sgdnet,
   title={SGDNet: An End-to-End Saliency-Guided Deep Neural Network for  No-Reference Image Quality Assessment},
   author={Yang, Sheng and Jiang, Qiuping and Lin, Weisi and Wang, Yongtao},
   booktitle={Proceedings of the 27th ACM International Conference on Multimedia},
