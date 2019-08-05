@@ -1,0 +1,152 @@
+enableTensorboard: True #
+test_during_training: True #
+
+### database ###
+
+# ### database ###
+# LIVE:
+#   datainfo: ./data/LIVEfullinfo.mat
+#   im_dir: /home/syang/ysdata/QA_dataset/LIVE-IQA/
+#   n_distortions: 5
+
+# patch_size: 32
+# stride: 32
+
+# train_ratio: 0.6
+# # val_ratio: 0.2  #
+# test_ratio: 0.2  #
+
+
+LIVE:
+  datainfo: ./data/liveysnew.mat
+  im_dir: /home/syang/ysdata/QA_dataset/LIVE-IQA/
+  sim_dir:  /home/syang/ysdata/QA_dataset/LIVE-IQA/predictions_lastmodelnobnb0a.15bs7TVdist.07-0.2642b_live/
+  n_distortions: 5
+  train_ratio: 0.78  #23 (6) 6
+# val_ratio: 0.2  #
+  test_ratio: 0.22  #
+  shape_r: 512
+  shape_c: 768
+
+
+#shape_r shape_c  H,W
+LIVEc:
+  datainfo: ./data/clive1162ysnew.mat
+  sim_dir: /home/syang/ysdata/QA_dataset/ChallengeDB_release/predictions_lastmodelnobnb0a.15bs7TVdist.07-0.2642b_livec/
+  im_dir: /home/syang/ysdata/QA_dataset/ChallengeDB_release/Images/
+#  n_distortions: 5
+  train_ratio: 0.8
+# val_ratio: 0.2  #
+  test_ratio: 0.2  #
+  # nb_imgs_train: 698
+  # nb_imgs_val: 232
+  # nb_imgs_test: 232
+  shape_r: 500
+  shape_c: 500
+
+
+TID2013:
+  datainfo: ./data/tid2013ysnew.mat
+  sim_dir: /home/syang/ysdata/QA_dataset/tid2013/predictions_lastmodelnobnb0a.15bs7TVdist.07-0.2642b_tid2013/
+  im_dir: /home/syang/ysdata/QA_dataset/tid2013/distorted_images/
+#  n_distortions: 5
+  train_ratio: 0.8
+# val_ratio: 0.2  #
+  test_ratio: 0.2  #
+  shape_r: 384
+  shape_c: 512
+  # nb_imgs_train: 1800
+  # nb_imgs_val: 600
+  # nb_imgs_test: 600
+
+
+CSIQ:
+  datainfo: ./data/csiqysnew.mat
+  sim_dir: /home/syang/ysdata/QA_dataset/CSIQ-IQA/predictions_lastmodelnobnb0a.15bs7TVdist.07-0.2642b_csiq/
+  im_dir: /home/syang/ysdata/QA_dataset/CSIQ-IQA/
+#  n_distortions: 5
+  train_ratio: 0.8
+# val_ratio: 0.2  #
+  test_ratio: 0.2  #
+  shape_r: 512
+  shape_c: 512
+  # nb_imgs_train: 1800
+  # nb_imgs_val: 600
+  # nb_imgs_test: 600    
+
+Koniq10k:
+  im_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/1024x768/
+  sim_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/predictions_lastmodelnobnb0a.15bs7TVdist.07-0.2642b_koniq10k/
+  # data_path: ../koniq10k/
+  datainfo: ./data/koniq10kysnew.mat
+#  patch_size: 32
+#  stride: 32
+  train_ratio: 0.8014
+# val_ratio: 0.2  #
+  test_ratio: 0.1986  #
+#   train_no: 7073
+# # val_ratio: 0.2  #
+#   val_no: 1000 
+#   test_ratio: 2000  #
+#  datainfo: ./data/LIVEfullinfo.mat
+#  im_dir: /home/syang/ysdata/QA_dataset/LIVE-IQA/
+  shape_r: 384
+  shape_c: 512
+
+Koniq10ksam:
+  im_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/1024x768/
+  sim_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/predictions_sam_koniq10k/
+  # data_path: ../koniq10k/
+  datainfo: ./data/koniq10kysnew.mat
+#  patch_size: 32
+#  stride: 32
+  train_ratio: 0.8014
+# val_ratio: 0.2  #
+  test_ratio:  0.1986  #
+#   train_no: 7073
+# # val_ratio: 0.2  #
+#   val_no: 1000 
+#   test_ratio: 2000  #
+#  datainfo: ./data/LIVEfullinfo.mat
+#  im_dir: /home/syang/ysdata/QA_dataset/LIVE-IQA/
+  shape_r: 384
+  shape_c: 512
+
+
+Koniq10ksalgan:
+  im_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/1024x768/
+  sim_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/predictions_salgan_koniq10k/
+  # data_path: ../koniq10k/
+  datainfo: ./data/koniq10kysnew.mat
+#  patch_size: 32
+#  stride: 32
+  train_ratio: 0.8014
+# val_ratio: 0.2  #
+  test_ratio: 0.1986  #
+#   train_no: 7073
+# # val_ratio: 0.2  #
+#   val_no: 1000 
+#   test_ratio: 2000  #
+#  datainfo: ./data/LIVEfullinfo.mat
+#  im_dir: /home/syang/ysdata/QA_dataset/LIVE-IQA/
+  shape_r: 384
+  shape_c: 512
+
+Koniq10kdva:
+  im_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/1024x768/
+  sim_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/predictions_DVA_koniq10k/
+  # data_path: ../koniq10k/
+  datainfo: ./data/koniq10kysnew.mat
+#  patch_size: 32
+#  stride: 32
+  train_ratio: 0.8014
+# val_ratio: 0.2  #
+  test_ratio: 0.1986  #
+#   train_no: 7073
+# # val_ratio: 0.2  #
+#   val_no: 1000 
+#   test_ratio: 2000  #
+#  datainfo: ./data/LIVEfullinfo.mat
+#  im_dir: /home/syang/ysdata/QA_dataset/LIVE-IQA/
+  shape_r: 384
+  shape_c: 512
