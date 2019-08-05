@@ -20,7 +20,7 @@ test_during_training: True #
 LIVE:
   datainfo: ./data/liveysnew.mat
   im_dir: /home/syang/ysdata/QA_dataset/LIVE-IQA/
-  sim_dir:  /home/syang/ysdata/QA_dataset/LIVE-IQA/predictions_lastmodelnobnb0a.15bs7TVdist.07-0.2642b_live/
+  sim_dir:  /home/syang/ysdata/QA_dataset/LIVE-IQA/predictions_DINet_live/
   n_distortions: 5
   train_ratio: 0.78  #23 (6) 6
 # val_ratio: 0.2  #
@@ -32,7 +32,7 @@ LIVE:
 #shape_r shape_c  H,W
 LIVEc:
   datainfo: ./data/clive1162ysnew.mat
-  sim_dir: /home/syang/ysdata/QA_dataset/ChallengeDB_release/predictions_lastmodelnobnb0a.15bs7TVdist.07-0.2642b_livec/
+  sim_dir: /home/syang/ysdata/QA_dataset/ChallengeDB_release/predictions_DINet_livec/
   im_dir: /home/syang/ysdata/QA_dataset/ChallengeDB_release/Images/
 #  n_distortions: 5
   train_ratio: 0.8
@@ -47,7 +47,7 @@ LIVEc:
 
 TID2013:
   datainfo: ./data/tid2013ysnew.mat
-  sim_dir: /home/syang/ysdata/QA_dataset/tid2013/predictions_lastmodelnobnb0a.15bs7TVdist.07-0.2642b_tid2013/
+  sim_dir: /home/syang/ysdata/QA_dataset/tid2013/predictions_DINet_tid2013/
   im_dir: /home/syang/ysdata/QA_dataset/tid2013/distorted_images/
 #  n_distortions: 5
   train_ratio: 0.8
@@ -62,7 +62,7 @@ TID2013:
 
 CSIQ:
   datainfo: ./data/csiqysnew.mat
-  sim_dir: /home/syang/ysdata/QA_dataset/CSIQ-IQA/predictions_lastmodelnobnb0a.15bs7TVdist.07-0.2642b_csiq/
+  sim_dir: /home/syang/ysdata/QA_dataset/CSIQ-IQA/predictions_DINet_csiq/
   im_dir: /home/syang/ysdata/QA_dataset/CSIQ-IQA/
 #  n_distortions: 5
   train_ratio: 0.8
@@ -76,7 +76,7 @@ CSIQ:
 
 Koniq10k:
   im_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/1024x768/
-  sim_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/predictions_lastmodelnobnb0a.15bs7TVdist.07-0.2642b_koniq10k/
+  sim_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/predictions_DINet_koniq10k/
   # data_path: ../koniq10k/
   datainfo: ./data/koniq10kysnew.mat
 #  patch_size: 32
