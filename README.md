@@ -49,4 +49,4 @@ CUDA_VISIBLE_DEVICES=0 python main.py  --database=Koniq10k --out2dim=1024 --sali
 ```
 
 ## Acknowledgments
-Code and data prepration largely benefits from [CNNIQAplusplus](https://github.com/lidq92/CNNIQAplusplus) by [Dingquan Li] (https://github.com/lidq92). 
+Code and data prepration largely benefits from [CNNIQAplusplus](https://github.com/lidq92/CNNIQAplusplus) by [Dingquan Li](https://github.com/lidq92). 
