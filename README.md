@@ -1,7 +1,7 @@
 # SGDNet
 SGDNet: An End-to-End Saliency-Guided Deep Neural Network for  No-Reference Image Quality Assessment
 
-This repository contains the reference code for our ACM MM 2019 paper. The pdf is coming soon.
+This repository contains the reference code for our ACM MM 2019 paper. The pdf can be found in [this link](https://drive.google.com/file/d/1HWv1rqphZ4Cu7OzVI2s93xTe4u_a-lXU/view?usp=sharing).
 
 If you use any part of our code, or SGDNet is useful for your research, please consider citing:
 ```
@@ -25,6 +25,7 @@ If you use any part of our code, or SGDNet is useful for your research, please c
 ```bash
 git clone https://github.com/ysyscool/SGDNet
 cd SGDNet
+mv SGDNet/acmmm_release/ SGDNet/
 mkdir ../checkpoint/
 ```
 - Download weights from [Google Drive](https://drive.google.com/file/d/1TvCBvZypSsiKUOHeBRrF-5L8SaA8dwLH/view?usp=sharing).
@@ -48,4 +49,4 @@ CUDA_VISIBLE_DEVICES=0 python main.py  --database=Koniq10k --out2dim=1024 --sali
 ```
 
 ## Acknowledgments
-Code and data prepration largely benefits from [CNNIQAplusplus](https://github.com/lidq92/CNNIQAplusplus) by Dingquan Li. 
+Code and data prepration largely benefits from [CNNIQAplusplus](https://github.com/lidq92/CNNIQAplusplus) by [Dingquan Li] (https://github.com/lidq92). 
