@@ -261,52 +261,6 @@ def se_block(input_tensor, compress_rate = 16):
 
 #model defination
 
-def ktresnetbaselineplusavg2ms(img_rows=480, img_cols=640, fixsed =False,out1dim=512,out2dim=512, train_bn=None, load =False):
-
-    input_ml_net = Input(shape=(img_rows, img_cols,3))
-    
-#    input_ml_net2 = Input(shape=(int(img_rows/8), int(img_cols/8),1))
-    base_model = kerasResnet(input_tensor=input_ml_net, train_bn=None)
-
-    if fixsed:
-        for layer in base_model.layers:
-            layer.trainable = False
-    x = base_model.output
-
-    x1 = Convolution2D(out1dim, kernel_size=(1, 1), activation='relu',padding='same',use_bias=False)(x) 
-    x,_= se_block(x1, compress_rate = 4)   #this is right
-    #x = BatchNormalization(axis=-1, scale=False)(x)
-
-    sm = Convolution2D(1, kernel_size=(1, 1), activation='relu',padding='same',use_bias=False,name='saliency')(x1) 
-
-    # attention1z = Lambda(repeat3, arguments={'num':out1dim})(sm)
-    # print attention1z.shape
-    x=layers.multiply([x,sm])
-    # x= se_block(x, compress_rate = 4)
-    x= GlobalAveragePooling2D()(x)
-    # sm2 = Convolution2D(2, kernel_size=(3, 3), activation='relu',padding='same',use_bias=False,name='saliency0')(sm) 
-    # sm2 = Flatten()(sm2)
-    # x=layers.concatenate([x,sm2],axis=-1)
-
-    #x= GlobalMaxPooling2D()(x)
-#    x = Dropout(0.5)(x)
-    x = Dense(out2dim, activation='relu', name='fc1')(x)
-    x = Dropout(0.5)(x)
-    x = Dense(out2dim, activation='relu', name='fc2')(x)
-#    x = Dropout(0.5)(x)
-    final_output= Dense(1,name='predictions')(x)
-#    , activation='softmax', name='predictions'
-#   
-#    
-    if load:
-        model = Model(inputs=[input_ml_net], outputs=[final_output])
-    else: 
-        model = Model(inputs=[input_ml_net], outputs=[final_output,sm])    
-    # for layer in model.layers:
-    #     print(layer.name, layer.input_shape, layer.output_shape)
-
-    return model
-
 
 def SGDNet(basemodel = 'resnet', saliency = 'output', CA = True, img_rows=480, img_cols=640, fixed =False,out1dim=512,out2dim=512, train_bn=None):
 
