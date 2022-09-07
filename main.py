@@ -317,20 +317,18 @@ if __name__ == '__main__':
             
         totalrsults=[x/repeat for x in totalrsults]
         outfile = open(output_folderfileavg, "w")
-        for i in totalrsults:
-            outfile.write(i + '\n')
+        outfile.write("\n".join(str(i) for i in totalrsults))
         outfile.close()
         
         elapsed_time = time.time() - start_time0   
         # print "test no. ", i         
         print ("total testing time: " , elapsed_time)
-
+        
         with open(output_folderfileavg) as f:
             content = f.readlines()
         maps2 = [float(x.strip()) for x in content] 
         f.close()
         testTfile = log_dir+ args.exp_id +'.txt'
-        print("Predict quality for " + testTfile+ " at "+  output_folder)
         with open(testTfile) as f:
             content = f.readlines()
         maps = [float(x.strip()) for x in content] 
@@ -340,5 +338,57 @@ if __name__ == '__main__':
         #print("Testing Results  :SROCC: {:.4f} KROCC: {:.4f} PLCC: {:.4f} RMSE: {:.4f} MAE: {:.4f} "
         #          .format(srocc, krocc, plcc, rmse, mae))
 
+    elif args.phase == "custom_test":
+        # path of output folder
+        arg = 'saliencyoutput-alpha0.25-ss-Koniq10k-1024-EXP0-lr=0.0001-bs=19.33-0.1721-0.0817-0.1637-0.2054.pkl'
+        print("Load weights SGDNet")
+        weight_file = '../checkpoint/'+ arg
+        model.load_weights(weight_file)         
+
+        output_folder = 'TestResults/'+"CustomTest"+ '/'
+        if os.path.isdir(output_folder) is False:
+            os.makedirs(output_folder)
+
+        nb_imgs_test = len(test_index) 
+        totalrsults = [0] * nb_imgs_test
+        output_folderfileavg = output_folder + 'results_avg' + '.txt'
+        start_time0 = time.time()   
+        repeat=1  # it should modify when you train/test on patches, otherwise keep it as default 1.
+        # totalrsults=[]
+        for i in range(repeat):
+            output_folderfile = output_folder + 'results'+str(i) + '.txt'
+        
+            start_time = time.time()    
+            test_generator = DataGenerator(test_index,config, 1, shuffle=False, mirror= False, mostype= args.mostype, saliency= args.saliency) 
+            predictions = model.predict(test_generator, nb_imgs_test)
+            if args.saliency == 'output':
+                predictions0 =predictions[0]
+            else:
+                predictions0 =predictions
+            #print len(predictions)        
+
+            elapsed_time2 = time.time() - start_time            
+            # print "test no. ", i             
+            
+            ("total model custom testing time: " , elapsed_time2)
+            results =[]
+            for pred in predictions0:
+                results.append(float(pred)) 
+                 
+            outfile = open(output_folderfile, "w")
+            print("\n".join(str(i) for i in results))
+            outfile.write("\n".join(str(i) for i in results))
+            outfile.close()
+            totalrsults=[sum(x) for x in zip(results, totalrsults)]
+            
+        totalrsults=[x/repeat for x in totalrsults]
+        outfile = open(output_folderfileavg, "w")
+        outfile.write("\n".join(str(i) for i in totalrsults))
+        outfile.close()
+        
+        elapsed_time = time.time() - start_time0   
+        # print "test no. ", i         
+        print ("total testing time: " , elapsed_time)
+        
     else:
         raise NotImplementedError
