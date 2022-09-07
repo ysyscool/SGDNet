@@ -18,6 +18,8 @@ import h5py, yaml
 import math
 from argparse import ArgumentParser
 
+import warnings
+warnings.filterwarnings("ignore")
 # import keras.backend as K
 
 # def mean_pred(y_true, y_pred):
@@ -166,6 +168,7 @@ class DataGenerator(keras.utils.Sequence):
         maps = [mos[idx] for idx in range(len(index))]    
         X,X2 = preprocess_imagesandsaliencyforiqa(images[0:len(index)], simages[0:len(index)], shape_r, shape_c, mirror=self.mirror,crop_h=shape_r , crop_w=shape_c)
         Y = preprocess_label(maps[0:len(index)])      
+        #print(X.shape, X2.shape, Y)
 
         return X,X2,Y
 
@@ -304,15 +307,18 @@ if __name__ == '__main__':
             ("total model testing time: " , elapsed_time2)
             results =[]
             for pred in predictions0:
-                results.append(float(pred))
-
+                results.append(float(pred)) 
+                 
             outfile = open(output_folderfile, "w")
-            print(outfile, "\n".join(str(i) for i in results))
+            print("\n".join(str(i) for i in results))
+            outfile.write("\n".join(str(i) for i in results))
             outfile.close()
             totalrsults=[sum(x) for x in zip(results, totalrsults)]
+            
         totalrsults=[x/repeat for x in totalrsults]
         outfile = open(output_folderfileavg, "w")
-        print(outfile, "\n".join(str(i) for i in totalrsults))
+        for i in totalrsults:
+            outfile.write(i + '\n')
         outfile.close()
         
         elapsed_time = time.time() - start_time0   
@@ -329,8 +335,6 @@ if __name__ == '__main__':
             content = f.readlines()
         maps = [float(x.strip()) for x in content] 
         f.close() 
-        
-        print(maps, maps2)
         
         #srocc, krocc, plcc, rmse, mae = evaluationmetrics(maps,maps2)
         #print("Testing Results  :SROCC: {:.4f} KROCC: {:.4f} PLCC: {:.4f} RMSE: {:.4f} MAE: {:.4f} "
