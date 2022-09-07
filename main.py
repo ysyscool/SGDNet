@@ -1,18 +1,19 @@
 from __future__ import division
-import cv2,keras
-from keras.optimizers import RMSprop,Adam
-from keras.callbacks import EarlyStopping, ModelCheckpoint, LearningRateScheduler, TensorBoard, ReduceLROnPlateau
-from keras.layers import Input
-from keras.models import Model
+import cv2, keras
+import tensorflow as tf
+from tensorflow.keras.optimizers import RMSprop, Adam
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, LearningRateScheduler, TensorBoard, ReduceLROnPlateau
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
 import sys,os
 import numpy as np
+
 
 from utilitiestrain import preprocess_imagesandsaliencyforiqa,preprocess_label
 import time
 
 from modelfinal import TVdist,SGDNet
-import keras.backend as K
-import tensorflow as tf
+import tensorflow.keras.backend as K
 import h5py, yaml
 import math
 from argparse import ArgumentParser
@@ -36,7 +37,6 @@ def evaluationmetrics(_y,_y_pred):
         rmse = np.sqrt(((sq - q) ** 2).mean())
         mae = np.abs((sq - q)).mean()
         return srocc, krocc, plcc, rmse, mae
-#
 
 def ensure_dir(path):
     if not os.path.exists(path):
@@ -74,18 +74,18 @@ def datasetgenerator(conf,log_dir,EXP_ID ='0', mostype = 'ss'):
     print ('Training indexs:')
     # train_index.sort()
     # print (train_index)    
-    print (len(test_index))
+    #print (len(test_index))
     if len(test_index)>0:
         ensure_dir(log_dir)
         testTfile = log_dir+ EXP_ID +'.txt'
         outfile = open(testTfile, "w")
 
         if mostype == 'DMOS':
-            print >> outfile, "\n".join(str(Info['DMOS'][0, i])  for i in test_index )
+            print(outfile, "\n".join(str(Info['DMOS'][0, i])  for i in test_index ))
         elif mostype == 'NMOS':
-            print >> outfile, "\n".join(str(Info['NMOS'][0, i])  for i in test_index )
+            print(outfile, "\n".join(str(Info['NMOS'][0, i])  for i in test_index ))
         else:
-            print >> outfile, "\n".join(str(Info['subjective_scores'][0, i])  for i in test_index )            
+            print(outfile, "\n".join(str(Info['subjective_scores'][0, i])  for i in test_index ))         
         outfile.close() 
     return  train_index,val_index,test_index  
     
@@ -157,7 +157,7 @@ class DataGenerator(keras.utils.Sequence):
         else:
             mos = Info['subjective_scores'][0, index]
 
-        im_names = [Info[Info['image_name'][0, :][i]].value.tobytes()\
+        im_names = [Info[Info['image_name'][0, :][i]][()].tobytes()\
                                 [::2].decode() for i in index]
         # print len(im_names)
         # print self.batch_size
@@ -245,11 +245,9 @@ if __name__ == '__main__':
             print("Load weights SGDNet")
             weight_file = '../checkpoint/'+ 'saliencyoutput-alpha0.25-ss-Koniq10k-1024-EXP0-lr=0.0001-bs=19.33-0.1721-0.0817-0.1637-0.2054.pkl'
             model.load_weights(weight_file)  
-            print (weight_file)
 
         nb_imgs_train =  len(train_index) 
         nb_imgs_val =  len(val_index) 
-        print (nb_imgs_train,nb_imgs_val)
         print("Training SGDNet")
         ensure_dir('../checkpoint/')
         checkpointdir= '../checkpoint/'+ 'saliency{}-alpha{}-{}-{}-{}-EXP{}-lr={}-bs={}'.format(args.saliency,str(args.alpha),args.mostype,args.database,str(args.out2dim),args.exp_id,str(args.lr),str(args.batch_size))
@@ -283,7 +281,6 @@ if __name__ == '__main__':
             os.makedirs(output_folder)
 
         nb_imgs_test = len(test_index) 
-        print (nb_imgs_test)
         totalrsults = [0] * nb_imgs_test
         output_folderfileavg = output_folder + 'results_avg' + '.txt'
         start_time0 = time.time()   
@@ -294,28 +291,28 @@ if __name__ == '__main__':
         
             start_time = time.time()    
             test_generator = DataGenerator(test_index,config, 1, shuffle=False, mirror= False, mostype= args.mostype, saliency= args.saliency) 
-            predictions = model.predict_generator(test_generator, nb_imgs_test)
+            predictions = model.predict(test_generator, nb_imgs_test)
             if args.saliency == 'output':
                 predictions0 =predictions[0]
             else:
                 predictions0 =predictions
-            print (len(predictions0))
             #print len(predictions)        
 
             elapsed_time2 = time.time() - start_time            
             # print "test no. ", i             
-            print ("total model testing time: " , elapsed_time2)
+            
+            ("total model testing time: " , elapsed_time2)
             results =[]
             for pred in predictions0:
                 results.append(float(pred))
 
             outfile = open(output_folderfile, "w")
-            print >> outfile, "\n".join(str(i) for i in results)
+            print(outfile, "\n".join(str(i) for i in results))
             outfile.close()
             totalrsults=[sum(x) for x in zip(results, totalrsults)]
         totalrsults=[x/repeat for x in totalrsults]
         outfile = open(output_folderfileavg, "w")
-        print >> outfile, "\n".join(str(i) for i in totalrsults)
+        print(outfile, "\n".join(str(i) for i in totalrsults))
         outfile.close()
         
         elapsed_time = time.time() - start_time0   
@@ -331,11 +328,13 @@ if __name__ == '__main__':
         with open(testTfile) as f:
             content = f.readlines()
         maps = [float(x.strip()) for x in content] 
-        f.close()        
-
-        srocc, krocc, plcc, rmse, mae = evaluationmetrics(maps,maps2)
-        print("Testing Results  :SROCC: {:.4f} KROCC: {:.4f} PLCC: {:.4f} RMSE: {:.4f} MAE: {:.4f} "
-                  .format(srocc, krocc, plcc, rmse, mae))
+        f.close() 
+        
+        print(maps, maps2)
+        
+        #srocc, krocc, plcc, rmse, mae = evaluationmetrics(maps,maps2)
+        #print("Testing Results  :SROCC: {:.4f} KROCC: {:.4f} PLCC: {:.4f} RMSE: {:.4f} MAE: {:.4f} "
+        #          .format(srocc, krocc, plcc, rmse, mae))
 
     else:
         raise NotImplementedError
