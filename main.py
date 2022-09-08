@@ -360,6 +360,12 @@ if __name__ == '__main__':
         
             start_time = time.time()    
             test_generator = DataGenerator(test_index,config, 1, shuffle=False, mirror= False, mostype= args.mostype, saliency= args.saliency) 
+            print("log:", test_index)
+            print("log:",config)
+            print("log:",nb_imgs_test)
+            print("log:",totalrsults)
+            print("log:",output_folderfileavg)
+            print("log:",test_generator)
             predictions = model.predict(test_generator, nb_imgs_test)
             if args.saliency == 'output':
                 predictions0 =predictions[0]
