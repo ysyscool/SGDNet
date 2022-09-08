@@ -91,7 +91,7 @@ def datasetgenerator(conf,log_dir,EXP_ID ='0', mostype = 'ss'):
         outfile.close() 
     return  train_index,val_index,test_index  
     
-class DataGenerator(keras.utils.Sequence):
+class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
     def __init__(self, list_IDs,conf, batch_size=32, shuffle=True,mirror=False, mostype = 'ss', saliency = 'output'):
         'Initialization'
@@ -165,7 +165,7 @@ class DataGenerator(keras.utils.Sequence):
         # print len(im_names)
         # print self.batch_size
         images = [os.path.join(im_dir, im_names[idx]) for idx in range(len(index))]
-        #images = [os.path.join(test_im_dir, im_names[idx]) for idx in range(len(index))] log
+        #images = [os.path.join(test_im_dir, im_names[idx]) for idx in range(len(index))]    
         simages = [os.path.join(sim_dir, im_names[idx]) for idx in range(len(index))]
         maps = [mos[idx] for idx in range(len(index))]    
         X,X2 = preprocess_imagesandsaliencyforiqa(images[0:len(index)], simages[0:len(index)], shape_r, shape_c, mirror=self.mirror,crop_h=shape_r , crop_w=shape_c)
@@ -181,7 +181,7 @@ if __name__ == '__main__':
     parser = ArgumentParser(description='PyTorch saliency guided CNNIQA')
     parser.add_argument('--batch_size', type=int, default=15,
                         help='input batch size for training (default: 15)')
-    parser.add_argument('--epochs', type=int, default=300,
+    parser.add_argument('--epochs', type=int, default=100,
                         help='number of epochs to train (default: 300)')
     parser.add_argument('--lr', type=float, default=1e-4,
                         help='learning rate (default: 0.0001)')
@@ -295,12 +295,15 @@ if __name__ == '__main__':
             output_folderfile = output_folder + 'results'+str(i) + '.txt'
         
             start_time = time.time()    
-            test_generator = DataGenerator(test_index,config, 1, shuffle=False, mirror= False, mostype= args.mostype, saliency= args.saliency) 
+            test_generator = DataGenerator(test_index,config, 1, shuffle=False, mirror= False, mostype= args.mostype, saliency= args.saliency)
+            for i in test_generator:
+                print("aaaa:",i)
+                break 
             predictions = model.predict(test_generator, nb_imgs_test)
             if args.saliency == 'output':
-                predictions0 =predictions[0]
+                predictions0 = predictions[0]
             else:
-                predictions0 =predictions
+                predictions0 = predictions
             #print len(predictions)        
 
             elapsed_time2 = time.time() - start_time            
@@ -362,12 +365,12 @@ if __name__ == '__main__':
         
             start_time = time.time()    
             test_generator = DataGenerator(test_index,config, 1, shuffle=False, mirror= False, mostype= args.mostype, saliency= args.saliency) 
-            print("log:", test_index)
-            print("log:",config)
-            print("log:",nb_imgs_test)
-            print("log:",totalrsults)
-            print("log:",output_folderfileavg)
-            print("log:",test_generator)
+            #print("log:", test_index)
+            #print("log:",config)
+            #print("log:",nb_imgs_test)
+            #print("log:",totalrsults)
+            #print("log:",output_folderfileavg)
+            #print("log:",test_generator)
             predictions = model.predict(test_generator, nb_imgs_test)
             if args.saliency == 'output':
                 predictions0 =predictions[0]

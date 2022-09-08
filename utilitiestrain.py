@@ -64,8 +64,8 @@ def preprocess_imagesandsaliencyforiqa(imgpaths1,simgpaths1,shape_r, shape_c ,cr
         # simage = padding(simage, shape_r, shape_c, 1)
         image = cv2.resize(image, (shape_c, shape_r))
         simage = cv2.resize(simage, (shape_c, shape_r))
-        img_h, img_w,img_d = image.shape
-
+        img_h, img_w, img_d = image.shape
+        
         pad_h = max(crop_h - img_h, 0)
         pad_w = max(crop_w - img_w, 0)
         if pad_h > 0 or pad_w > 0:
