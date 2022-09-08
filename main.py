@@ -144,6 +144,7 @@ class DataGenerator(keras.utils.Sequence):
         # y = np.empty((self.batch_size), dtype=int)
         sim_dir = self.conf['sim_dir']
         im_dir = self.conf['im_dir']
+        test_im_dir = self.conf['test_im_dir']
         datainfo = self.conf['datainfo']
         shape_r =  self.conf['shape_r']  
         shape_c =  self.conf['shape_c']    
@@ -164,6 +165,7 @@ class DataGenerator(keras.utils.Sequence):
         # print len(im_names)
         # print self.batch_size
         images = [os.path.join(im_dir, im_names[idx]) for idx in range(len(index))]
+        #images = [os.path.join(test_im_dir, im_names[idx]) for idx in range(len(index))] log
         simages = [os.path.join(sim_dir, im_names[idx]) for idx in range(len(index))]
         maps = [mos[idx] for idx in range(len(index))]    
         X,X2 = preprocess_imagesandsaliencyforiqa(images[0:len(index)], simages[0:len(index)], shape_r, shape_c, mirror=self.mirror,crop_h=shape_r , crop_w=shape_c)
