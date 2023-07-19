@@ -28,14 +28,14 @@ cd SGDNet
 mv SGDNet/acmmm_release/ SGDNet/
 mkdir ../checkpoint/
 ```
-- Download weights from [Google Drive](https://drive.google.com/file/d/1TvCBvZypSsiKUOHeBRrF-5L8SaA8dwLH/view?usp=sharing).
+- Download weights from [Google Drive](https://drive.google.com/file/d/1yvOPZw-CnKH3_lcdI8YRlfash2lXejz4/view?usp=drive_link).
 Put the weights into 
 ```bash
 cd ../checkpoint/
 ```
 
 ### Train/Test
-1. Download the IQA datasets. Their saliency maps, used in our experiments, can be downloaded in this [link](https://drive.google.com/drive/folders/1EoXpuEBAUPNKPh-17u8WRyHCCg9PKKgT?usp=sharing).
+1. Download the IQA datasets. Their saliency maps, used in our experiments, can be downloaded in this [link](https://drive.google.com/file/d/1W1QfxmHgfbdNVEq0Z1oG8xGrOTan3Ij7/view?usp=drive_link).
 2. Modify the paths in config.yaml
 And then using the following command to train the model (use knoiq10k and DINet as example)
 ```bash
