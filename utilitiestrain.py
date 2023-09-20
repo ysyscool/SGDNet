@@ -1,4 +1,5 @@
 from __future__ import division
+from importlib.resources import path
 import cv2
 import numpy as np
 import scipy.io
@@ -53,9 +54,9 @@ def preprocess_imagesandsaliencyforiqa(imgpaths1,simgpaths1,shape_r, shape_c ,cr
     # i=0
     # cv2.imread() loads images as BGR
     for patha,pathb in zip(imgpaths1,simgpaths1):
-        image = cv2.imread(patha,1)
+        image = cv2.imread(patha[1:],1)
         image = preprocess_image(image)
-        simage = cv2.imread(pathb,0)
+        simage = cv2.imread(pathb[1:],0)
         simage = np.asarray(simage, np.float32)
         simage /= 255.0  
         # img_h, img_w = simage.shape
@@ -63,8 +64,8 @@ def preprocess_imagesandsaliencyforiqa(imgpaths1,simgpaths1,shape_r, shape_c ,cr
         # simage = padding(simage, shape_r, shape_c, 1)
         image = cv2.resize(image, (shape_c, shape_r))
         simage = cv2.resize(simage, (shape_c, shape_r))
-        img_h, img_w,img_d = image.shape
-
+        img_h, img_w, img_d = image.shape
+        
         pad_h = max(crop_h - img_h, 0)
         pad_w = max(crop_w - img_w, 0)
         if pad_h > 0 or pad_w > 0:

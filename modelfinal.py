@@ -1,18 +1,18 @@
 from __future__ import division
-from keras import layers
-from keras.models import Model
-from keras.layers import Lambda,Conv2D,LSTM, Concatenate,GlobalMaxPooling2D,GlobalAveragePooling2D
+from tensorflow.keras import layers
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Conv2D, GlobalAveragePooling2D
 
-from keras.layers.core import Dropout, Activation,Dense,Reshape,Flatten
-from keras.layers import Input, merge,Add,multiply, Permute
-from keras.layers.convolutional import Convolution2D, MaxPooling2D,UpSampling2D ,Deconvolution2D,ZeroPadding2D,AveragePooling2D
-from keras.layers.normalization import BatchNormalization
+from tensorflow.keras.layers import Dropout, Activation, Dense
+from tensorflow.keras.layers import Input, multiply
+from tensorflow.keras.layers import Convolution2D, MaxPooling2D
+from tensorflow.keras.layers import BatchNormalization
 #from keras.layers import Conv2D, Concatenate, MaxPooling2D
 #from keras.layers.convolutional import AtrousConvolution2D
-from keras.utils.data_utils import get_file
+from tensorflow.keras.utils import get_file
 
 #from keras.regularizers import l2
-import keras.backend as K
+import tensorflow.keras.backend as K
 #import theano.tensor as T
 #from PCreshape import PCreshape
 #from keras.applications.inception_v3 import InceptionV3, conv2d_bn
@@ -263,7 +263,6 @@ def se_block(input_tensor, compress_rate = 16):
 
 
 def SGDNet(basemodel = 'resnet', saliency = 'output', CA = True, img_rows=480, img_cols=640, fixed =False,out1dim=512,out2dim=512, train_bn=None):
-
     inputimage = Input(shape=(img_rows, img_cols,3))
     
 #    input_ml_net2 = Input(shape=(int(img_rows/8), int(img_cols/8),1))

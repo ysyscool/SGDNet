@@ -77,6 +77,7 @@ CSIQ:
 Koniq10k:
   im_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/1024x768/
   sim_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/predictions_DINet_koniq10k/
+  test_im_dir: /home/syang/ysdata/QA_dataset/koniq10k_1024x768/test_img/
   # data_path: ../koniq10k/
   datainfo: ./data/koniq10kysnew.mat
 #  patch_size: 32
